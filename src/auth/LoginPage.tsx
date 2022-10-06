@@ -1,15 +1,12 @@
-import { Button, Grid, Typography } from '@mui/material';
+import { Alert, Button, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { API_LOCAL, TITLE } from '../config';
+import { FieldInterface, TokenResult } from '../interfaces';
 import { links } from '../router/routerConfig';
+import { COLORS } from '../UI/colors';
 import InputField from '../UI/InputField';
-
-interface FieldInterface {
-  value: string;
-  error: boolean;
-}
 
 interface FieldsForLoginI {
   email: FieldInterface;
@@ -20,6 +17,7 @@ const fieldsForLogin: FieldsForLoginI = {
   email: {
     value: '',
     error: false,
+    helpertext: '',
   },
   password: {
     value: '',
@@ -32,27 +30,39 @@ const LoginPage: React.FC = () => {
   const handlerChangeFieldValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFieldsValues({ ...fieldsValues, [e.target.id]: { value: e.target.value } });
   };
+  const [isIncorrectData, setIsIncorrectData] = useState(false);
 
   const onLoginButtonClick = async (): Promise<void> => {
     if (fieldsValues.email.value && fieldsValues.password.value) {
       try {
-        const answer = await axios.post(`${API_LOCAL}/api/auth/login`, {
+        const answer = await axios.post<TokenResult>(`${API_LOCAL}/api/auth/login`, {
           email: fieldsValues.email.value,
           password: fieldsValues.password.value,
         });
-        console.log(answer.status);
+        if (answer.data.message === 'incorrect') {
+          setIsIncorrectData(true);
+          return;
+        } else if (answer.data.token) {
+          localStorage.setItem('token', answer.data.token);
+          window.location.reload();
+        }
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     }
   };
 
   return (
-    <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh', backgroundColor: '#110746' }}>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: '100vh', backgroundColor: COLORS.backgroundColor }}
+    >
       <Grid
         item
         style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          backgroundColor: COLORS.landBackgroundColor,
           width: 'clamp(300px, 60vw, 400px)',
           padding: '30px 20px',
           borderRadius: 5,
@@ -83,6 +93,7 @@ const LoginPage: React.FC = () => {
               label="Password"
             />
           </Grid>
+          <Grid item>{isIncorrectData && <Alert severity="error">Error email or password</Alert>}</Grid>
           <Grid item container justifyContent="space-between">
             <Grid item>
               <Button size="small">Forget password</Button>

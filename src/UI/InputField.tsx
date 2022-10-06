@@ -10,6 +10,7 @@ interface InputFieldProps {
   error?: boolean;
   fullWidth?: boolean;
   type?: string;
+  helperText?: string;
   icon?: SvgIconTypeMap;
 }
 
@@ -22,6 +23,7 @@ const InputField: React.FC<InputFieldProps> = ({
   error,
   id,
   fullWidth = true,
+  helperText,
 }) => {
   return icon ? (
     <TextField
@@ -33,6 +35,7 @@ const InputField: React.FC<InputFieldProps> = ({
       onChange={handlerChangeValue}
       type={type}
       error={error}
+      helperText={helperText}
       InputProps={{
         startAdornment: <InputAdornment position="start">{icon}</InputAdornment>,
       }}
@@ -46,6 +49,7 @@ const InputField: React.FC<InputFieldProps> = ({
       fullWidth={fullWidth}
       label={label}
       value={value}
+      helperText={helperText}
       onChange={handlerChangeValue}
     />
   );

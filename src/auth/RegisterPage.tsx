@@ -3,13 +3,10 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { API_LOCAL, TITLE } from '../config';
+import { FieldInterface, TokenResult } from '../interfaces';
 import { links } from '../router/routerConfig';
+import { COLORS } from '../UI/colors';
 import InputField from '../UI/InputField';
-
-interface FieldInterface {
-  value: string;
-  error: boolean;
-}
 
 interface FieldsForLoginI {
   email: FieldInterface;
@@ -23,6 +20,7 @@ const fieldsForLogin: FieldsForLoginI = {
   email: {
     value: '',
     error: false,
+    helpertext: '',
   },
   firstname: {
     value: '',
@@ -53,28 +51,40 @@ const RegisterPage: React.FC = () => {
     if (fieldsValues.email.value && fieldsValues.password.value) {
       try {
         setLoadingRegisterButton(true);
-        const answer = await axios
-          .post(`${API_LOCAL}/api/auth/register`, {
-            email: fieldsValues.email.value,
-            firstname: fieldsValues.firstname.value,
-            lastname: fieldsValues.lastname.value,
-            password: fieldsValues.password.value,
-          })
-          .then(() => {
-            setLoadingRegisterButton(false);
+        console.log(fieldsValues);
+        const answer = await axios.post<TokenResult>(`${API_LOCAL}/api/auth/register`, {
+          email: fieldsValues.email.value,
+          firstname: fieldsValues.firstname.value,
+          lastname: fieldsValues.lastname.value,
+          password: fieldsValues.password.value,
+        });
+
+        if (answer.data.message === 'user is exist') {
+          setFieldsValues({
+            ...fieldsValues,
+            email: { ...fieldsValues.email, helpertext: 'Email is exist', error: true },
           });
-        console.log(answer);
+        } else if (answer.data.token) {
+          localStorage.setItem('token', answer.data.token);
+          window.location.reload();
+        }
       } catch (e) {
         console.log(e);
       }
     }
+    setLoadingRegisterButton(false);
   };
   return (
-    <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh', backgroundColor: '#110746' }}>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: '100vh', backgroundColor: COLORS.backgroundColor }}
+    >
       <Grid
         item
         style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          backgroundColor: COLORS.landBackgroundColor,
           width: 'clamp(300px, 60vw, 400px)',
           padding: '30px 20px',
           borderRadius: 5,
@@ -94,6 +104,7 @@ const RegisterPage: React.FC = () => {
               value={fieldsValues.email.value}
               error={fieldsValues.email.error}
               handlerChangeValue={handlerChangeFieldValue}
+              helperText={fieldsValues.email.helpertext}
               label="Enter your Email"
             />
           </Grid>

@@ -2,22 +2,37 @@ export interface NoteInterface {
   title: string;
   text: string;
   timestamp: {
-    createdAt: Date;
+    readonly createdAt: Date;
     updateAt: Date;
   };
-  idUser?: string;
+  readonly idUser?: string;
 }
 
 export interface UserInterface {
-  email: string;
+  readonly email: string;
   firstname: string;
   lastname: string;
   password: string;
   dateOfBirhDate?: Date;
-  createdAt: Date;
+  readonly createdAt: Date;
 }
 
 export interface TokenUserInfo {
-  id: string;
-  email: string;
+  readonly id: string;
+  readonly email: string;
+}
+
+export interface TokenResult {
+  token: string;
+  message: string;
+}
+
+export interface ErrorsMessage {
+  message: string;
+}
+
+export interface FieldInterface {
+  value: string;
+  error: boolean;
+  helpertext?: string;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import LoaderCheckAuth from '../auth/LoadingAuth';
 import LoginPage from '../auth/LoginPage';
 import RegisterPage from '../auth/RegisterPage';
 import Header from '../components/Header/Header';
@@ -18,9 +19,11 @@ const RouterApp: React.FC = () => {
       setIsAuth(true);
     }
   }, [loading, data]);
+
+  if (loading) return <LoaderCheckAuth />;
+
   return (
     <BrowserRouter>
-      {loading && <h1>Loading...</h1>}
       {!isAuth ? (
         <Routes>
           <Route path={links.login} element={<LoginPage />} />

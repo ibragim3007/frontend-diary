@@ -26,6 +26,7 @@ const PageWithNotes: React.FC = () => {
       style={{
         backgroundColor: COLORS.backgroundColor,
         marginTop: 10,
+        minHeight: '100vh',
       }}
     >
       <AddNewNote addNewNotes={addNewNotes} />

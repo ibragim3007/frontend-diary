@@ -7,6 +7,11 @@ import { COLORS } from '../../UI/colors';
 
 const Header: React.FC = () => {
   const matches = useMediaQuery('(min-width: 500px)');
+  const exitButton = (): void => {
+    console.log('asd');
+    localStorage.removeItem('token');
+    window.location.reload();
+  };
   return (
     <Grid
       alignItems="center"
@@ -42,7 +47,12 @@ const Header: React.FC = () => {
               </Button>
             </Grid>
             <Grid item>
-              <Button size="large" startIcon={<ExitToAppIcon />} style={{ color: COLORS.backgroundColor }}>
+              <Button
+                onClick={exitButton}
+                size="large"
+                startIcon={<ExitToAppIcon />}
+                style={{ color: COLORS.backgroundColor }}
+              >
                 Exit
               </Button>
             </Grid>
@@ -55,7 +65,7 @@ const Header: React.FC = () => {
               </IconButton>
             </Grid>
             <Grid item>
-              <IconButton size="large" style={{ color: COLORS.backgroundColor }}>
+              <IconButton onClick={exitButton} size="large" style={{ color: COLORS.backgroundColor }}>
                 <ExitToAppIcon />
               </IconButton>
             </Grid>

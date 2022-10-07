@@ -21,7 +21,9 @@ const NoteBlock: React.FC<NoteBlockProps> = ({ note }) => {
         <Typography style={{ color: '#333' }} variant="h5">
           {note.title}
         </Typography>
-        <Typography variant="subtitle2">{getFullTime(note.timestamps.createdAt)}</Typography>
+        <Typography variant="subtitle1" style={{ color: '#888', fontSize: 12, fontStyle: 'italic' }}>
+          {getFullTime(note.timestamps.createdAt)}
+        </Typography>
       </Grid>
       <Grid style={{ marginTop: 6 }} item>
         <Typography style={{ fontSize: 14, lineHeight: 1.67, wordSpacing: 2.45 }}>{note.text}</Typography>

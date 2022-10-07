@@ -3,6 +3,7 @@ import { Button, Grid, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { API_LOCAL } from '../../../config';
 import { usePostHttp } from '../../../hooks/post.http.hook';
+import { NoteInterface } from '../../../interfaces';
 import { COLORS } from '../../../UI/colors';
 import MainText from './MainText';
 import SubText from './SubText';
@@ -13,7 +14,11 @@ interface AddNoteField {
   helperText?: string;
 }
 
-const AddNewNote: React.FC = () => {
+interface AddNewNoteProps {
+  addNewNotes: (note: NoteInterface) => void;
+}
+
+const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
   const [titleValue, setTitleValue] = useState<AddNoteField>({
     value: '',
     error: false,
@@ -29,7 +34,7 @@ const AddNewNote: React.FC = () => {
   const handlerChangeValueDescription = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setDescriptionValue({ ...descriptionValue, value: e.target.value });
 
-  const { request, loading } = usePostHttp(`${API_LOCAL}/api/note/add`);
+  const { request, loading } = usePostHttp<NoteInterface>(`${API_LOCAL}/api/note/add`);
 
   const ClickButtonAddNewNote = async (): Promise<void> => {
     if (titleValue.value === '') {
@@ -47,8 +52,9 @@ const AddNewNote: React.FC = () => {
       text: descriptionValue.value,
     };
     const result = await request(dataForSend);
-    if (result === 'Created') {
-      console.log('Created');
+    console.log(result);
+    if (result) {
+      addNewNotes(result);
     }
   };
 

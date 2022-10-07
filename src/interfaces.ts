@@ -1,11 +1,12 @@
 export interface NoteInterface {
   title: string;
   text: string;
-  timestamp: {
+  timestamps: {
     readonly createdAt: Date;
     updateAt: Date;
   };
   readonly idUser?: string;
+  readonly _id: string;
 }
 
 export interface UserInterface {

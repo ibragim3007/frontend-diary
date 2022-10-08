@@ -2,6 +2,7 @@ import { Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { API_LOCAL } from '../../config';
 import { useHttp } from '../../hooks/http.auth.hook';
+import { usePostHttp } from '../../hooks/post.http.hook';
 import { NoteInterface } from '../../interfaces';
 import { COLORS } from '../../UI/colors';
 import AddNewNote from './AddNewNote/AddNewNote';
@@ -19,8 +20,13 @@ const PageWithNotes: React.FC = () => {
     setNotes(data);
   }, [data, loading]);
 
-  if (loading) return <h1>Loading</h1>;
+  const { request } = usePostHttp(`${API_LOCAL}/api/note/delete`);
+  const deleteNote = async (id: string): Promise<void> => {
+    setNotes(notes?.filter(item => item._id !== id));
+    await request({ id });
+  };
 
+  if (loading) return <h1>Loading</h1>;
   return (
     <Grid
       style={{
@@ -30,7 +36,11 @@ const PageWithNotes: React.FC = () => {
       }}
     >
       <AddNewNote addNewNotes={addNewNotes} />
-      {!loading && notes ? <NoteBlocks notes={notes} /> : <h1 style={{ color: 'white' }}>Loading...</h1>}
+      {!loading && notes ? (
+        <NoteBlocks deleteNote={deleteNote} notes={notes} />
+      ) : (
+        <h1 style={{ color: 'white' }}>Loading...</h1>
+      )}
     </Grid>
   );
 };

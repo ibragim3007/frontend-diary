@@ -5,9 +5,10 @@ import NoteBlock from './NoteBlock';
 
 interface NoteBlocksProps {
   notes: NoteInterface[];
+  deleteNote: (id: string) => Promise<void>;
 }
 
-const NoteBlocks: React.FC<NoteBlocksProps> = ({ notes }) => {
+const NoteBlocks: React.FC<NoteBlocksProps> = ({ notes, deleteNote }) => {
   return (
     <Grid
       style={{
@@ -21,7 +22,7 @@ const NoteBlocks: React.FC<NoteBlocksProps> = ({ notes }) => {
       }}
     >
       {notes?.map(note => {
-        return <NoteBlock key={note._id} note={note} />;
+        return <NoteBlock deleteNote={deleteNote} key={note._id} note={note} />;
       })}
     </Grid>
   );

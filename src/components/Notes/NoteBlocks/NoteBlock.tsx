@@ -3,15 +3,14 @@ import React from 'react';
 import { NoteInterface } from '../../../interfaces';
 import { COLORS } from '../../../UI/colors';
 import { getFullTime } from '../../helper/convertTime';
-import ButtonDelete from './ButtonDelete';
-import ButtonUpdate from './ButtonUpdate';
 
 interface NoteBlockProps {
   note: NoteInterface;
   deleteNote: (id: string) => Promise<void>;
+  updateNote: (id: string, title: string, text: string) => Promise<void>;
 }
 
-const NoteBlock: React.FC<NoteBlockProps> = ({ note, deleteNote }) => {
+const NoteBlock: React.FC<NoteBlockProps> = ({ note, deleteNote, updateNote }) => {
   return (
     <Grid style={{ border: '2px dashed rgba(255, 255, 255, 0.3)', borderRadius: 10 }}>
       <Grid item style={{ backgroundColor: COLORS.landBackgroundColor, padding: 20, borderRadius: 10 }}>
@@ -42,7 +41,7 @@ const NoteBlock: React.FC<NoteBlockProps> = ({ note, deleteNote }) => {
             item
           >
             <ButtonDelete deleteNote={deleteNote} idNote={note._id} titleNote={note.title} />
-            <ButtonUpdate />
+            <ButtonUpdate updateNote={updateNote} note={note} />
           </Grid>
         </Grid>
       </Grid>

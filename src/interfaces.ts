@@ -10,6 +10,7 @@ export interface NoteInterface {
 }
 
 export interface UserInterface {
+  _id: string;
   readonly email: string;
   firstname: string;
   lastname: string;

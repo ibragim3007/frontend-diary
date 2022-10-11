@@ -1,8 +1,10 @@
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { Button, Grid, IconButton, Typography, useMediaQuery } from '@mui/material';
+import { Button, Grid, IconButton, Paper, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { TITLE } from '../../config';
+import { links } from '../../router/routerConfig';
 import { COLORS } from '../../UI/colors';
 
 const Header: React.FC = () => {
@@ -13,66 +15,65 @@ const Header: React.FC = () => {
     window.location.reload();
   };
   return (
-    <Grid
-      alignItems="center"
-      container
-      style={{
-        backgroundColor: COLORS.landBackgroundColor,
-        height: COLORS.headerHeight,
-        padding: '10px 20px',
-        borderRadius: '0px 0px 10px 10px',
-      }}
-      justifyContent="space-between"
-    >
-      <Grid item>
-        <Typography
-          style={{
-            fontSize: 30,
-            textTransform: 'uppercase',
-            letterSpacing: 1.4,
-            cursor: 'pointer',
-            color: COLORS.backgroundColor,
-            fontWeight: 'bold',
-          }}
-        >
-          {TITLE}
-        </Typography>
-      </Grid>
-      <Grid item>
-        {matches ? (
-          <Grid alignItems="center" spacing={3} container item>
-            <Grid item>
-              <Button size="large" startIcon={<AccountBoxIcon />} style={{ color: COLORS.backgroundColor }}>
-                Profile
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                onClick={exitButton}
-                size="large"
-                startIcon={<ExitToAppIcon />}
-                style={{ color: COLORS.backgroundColor }}
-              >
-                Exit
-              </Button>
-            </Grid>
+    <Paper>
+      <Grid
+        alignItems="center"
+        container
+        style={{
+          height: COLORS.headerHeight,
+          padding: '10px 20px',
+          borderRadius: '0px 0px 10px 10px',
+        }}
+        justifyContent="space-between"
+      >
+        <NavLink to="/" style={{ textDecoration: 'none' }}>
+          <Grid item>
+            <Typography
+              style={{
+                fontSize: 30,
+                textTransform: 'uppercase',
+                letterSpacing: 1.4,
+                cursor: 'pointer',
+                fontWeight: 'bold',
+              }}
+            >
+              {TITLE}
+            </Typography>
           </Grid>
-        ) : (
-          <Grid alignItems="center" spacing={0} container item>
-            <Grid item>
-              <IconButton size="large" style={{ color: COLORS.backgroundColor }}>
-                <AccountBoxIcon />
-              </IconButton>
+        </NavLink>
+        <Grid item>
+          {matches ? (
+            <Grid alignItems="center" spacing={3} container item>
+              <Grid item>
+                <NavLink to={links.profile} style={{ textDecoration: 'none' }}>
+                  <Button size="large" startIcon={<AccountBoxIcon />}>
+                    Profile
+                  </Button>
+                </NavLink>
+              </Grid>
+              <Grid item>
+                <Button onClick={exitButton} size="large" startIcon={<ExitToAppIcon />}>
+                  Exit
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <IconButton onClick={exitButton} size="large" style={{ color: COLORS.backgroundColor }}>
-                <ExitToAppIcon />
-              </IconButton>
+          ) : (
+            <Grid alignItems="center" spacing={0} container item>
+              <Grid item>
+                <IconButton size="large" style={{ color: COLORS.backgroundColor }}>
+                  <AccountBoxIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton onClick={exitButton} size="large" style={{ color: COLORS.backgroundColor }}>
+                  <ExitToAppIcon />
+                </IconButton>
+              </Grid>
             </Grid>
-          </Grid>
-        )}
+          )}
+        </Grid>
       </Grid>
-    </Grid>
+    </Paper>
   );
 };
 

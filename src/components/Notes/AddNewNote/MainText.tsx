@@ -7,7 +7,7 @@ interface MainTextProps {
 
 const MainText: React.FC<MainTextProps> = ({ children }) => {
   return (
-    <Typography style={{ color: '#333', marginBottom: 5 }} variant="h5">
+    <Typography style={{ marginBottom: 5 }} variant="h5">
       {children}
     </Typography>
   );

@@ -1,5 +1,5 @@
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { Button, Grid, TextField } from '@mui/material';
+import { Button, Grid, Paper, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { API_LOCAL } from '../../../config';
 import { usePostHttp } from '../../../hooks/post.http.hook';
@@ -59,47 +59,49 @@ const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
   };
 
   return (
-    <Grid style={{ backgroundColor: COLORS.landBackgroundColor, padding: 30, margin: 20, borderRadius: 10 }}>
-      <Grid wrap="wrap" spacing={3} container>
-        <Grid lg={4} md={5} item>
-          <MainText>Title of the day</MainText>
-          <SubText>Describe in a few words</SubText>
-          <TextField
-            onChange={handlerChangeValueTitle}
-            value={titleValue.value}
-            error={titleValue.error}
-            helperText={titleValue.helperText}
-            variant="filled"
-            size="small"
-            label="Title"
-            fullWidth
-          />
-        </Grid>
-        <Grid lg={8} md={7} item>
-          <MainText> Table of contents of the day</MainText>
-          <SubText>
-            Write what you think or what happend todat! Everything written here will remain confidential
-          </SubText>
-          <TextField
-            onChange={handlerChangeValueDescription}
-            value={descriptionValue.value}
-            error={descriptionValue.error}
-            helperText={descriptionValue.helperText}
-            label="Description"
-            variant="filled"
-            size="small"
-            rows={5}
-            multiline
-            fullWidth
-          />
-        </Grid>
-        <Grid container justifyContent="flex-end" item>
-          <Button onClick={ClickButtonAddNewNote} disabled={loading} variant="outlined" startIcon={<AddBoxIcon />}>
-            Add new note
-          </Button>
+    <Paper>
+      <Grid style={{ padding: 20, margin: 20, borderRadius: 10 }}>
+        <Grid wrap="wrap" spacing={3} container>
+          <Grid lg={4} md={5} item>
+            <MainText>Title of the day</MainText>
+            <SubText>Describe in a few words</SubText>
+            <TextField
+              onChange={handlerChangeValueTitle}
+              value={titleValue.value}
+              error={titleValue.error}
+              helperText={titleValue.helperText}
+              variant="filled"
+              size="small"
+              label="Title"
+              fullWidth
+            />
+          </Grid>
+          <Grid lg={8} md={7} item>
+            <MainText> Table of contents of the day</MainText>
+            <SubText>
+              Write what you think or what happend todat! Everything written here will remain confidential
+            </SubText>
+            <TextField
+              onChange={handlerChangeValueDescription}
+              value={descriptionValue.value}
+              error={descriptionValue.error}
+              helperText={descriptionValue.helperText}
+              label="Description"
+              variant="filled"
+              size="small"
+              rows={5}
+              multiline
+              fullWidth
+            />
+          </Grid>
+          <Grid container justifyContent="flex-end" item>
+            <Button onClick={ClickButtonAddNewNote} disabled={loading} variant="outlined" startIcon={<AddBoxIcon />}>
+              Add new note
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Paper>
   );
 };
 

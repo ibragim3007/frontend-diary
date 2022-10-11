@@ -54,7 +54,6 @@ const PageWithNotes: React.FC = () => {
   return (
     <Grid
       style={{
-        backgroundColor: COLORS.backgroundColor,
         marginTop: 10,
       }}
     >

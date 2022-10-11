@@ -1,6 +1,6 @@
-import { Alert, Button, Grid, Typography } from '@mui/material';
+import { Alert, Button, Grid, Paper, Typography } from '@mui/material';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { API_LOCAL, TITLE } from '../config';
 import { FieldInterface, TokenResult } from '../interfaces';
@@ -25,7 +25,11 @@ const fieldsForLogin: FieldsForLoginI = {
   },
 };
 
-const LoginPage: React.FC = () => {
+interface LoginPageProps {
+  mode: 'dark' | 'light';
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ mode }) => {
   const [fieldsValues, setFieldsValues] = useState<FieldsForLoginI>(fieldsForLogin);
   const handlerChangeFieldValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFieldsValues({ ...fieldsValues, [e.target.id]: { value: e.target.value } });
@@ -57,55 +61,59 @@ const LoginPage: React.FC = () => {
       container
       justifyContent="center"
       alignItems="center"
-      style={{ height: '100vh', backgroundColor: COLORS.backgroundColor }}
+      style={{
+        height: '100vh',
+        backgroundColor: mode === 'light' ? COLORS.backgroundColor : COLORS.backgroundColorDark,
+      }}
     >
-      <Grid
-        item
-        style={{
-          backgroundColor: COLORS.landBackgroundColor,
-          width: 'clamp(300px, 60vw, 400px)',
-          padding: '30px 20px',
-          borderRadius: 5,
-        }}
-      >
-        <Grid spacing={3} direction="column" container>
-          <Grid alignItems="center" direction="column" container item>
-            <Typography variant="h4">Login to {TITLE}</Typography>
-            <NavLink to={links.registration}>
-              <Typography variant="subtitle1">First time here?</Typography>
-            </NavLink>
-          </Grid>
-          <Grid item>
-            <InputField
-              id="email"
-              type="email"
-              value={fieldsValues.email.value}
-              handlerChangeValue={handlerChangeFieldValue}
-              label="Email"
-            />
-          </Grid>
-          <Grid item>
-            <InputField
-              id="password"
-              type="password"
-              value={fieldsValues.password.value}
-              handlerChangeValue={handlerChangeFieldValue}
-              label="Password"
-            />
-          </Grid>
-          <Grid item>{isIncorrectData && <Alert severity="error">Error email or password</Alert>}</Grid>
-          <Grid item container justifyContent="space-between">
-            <Grid item>
-              <Button size="small">Forget password</Button>
+      <Paper>
+        <Grid
+          item
+          style={{
+            width: 'clamp(300px, 60vw, 400px)',
+            padding: '30px 20px',
+            borderRadius: 5,
+          }}
+        >
+          <Grid spacing={3} direction="column" container>
+            <Grid alignItems="center" direction="column" container item>
+              <Typography variant="h4">Login to {TITLE}</Typography>
+              <NavLink to={links.registration} style={{ color: '#999' }}>
+                <Typography variant="subtitle1">First time here?</Typography>
+              </NavLink>
             </Grid>
             <Grid item>
-              <Button onClick={onLoginButtonClick} size="small" variant="contained">
-                Log In
-              </Button>
+              <InputField
+                id="email"
+                type="email"
+                value={fieldsValues.email.value}
+                handlerChangeValue={handlerChangeFieldValue}
+                label="Email"
+              />
+            </Grid>
+            <Grid item>
+              <InputField
+                id="password"
+                type="password"
+                value={fieldsValues.password.value}
+                handlerChangeValue={handlerChangeFieldValue}
+                label="Password"
+              />
+            </Grid>
+            <Grid item>{isIncorrectData && <Alert severity="error">Error email or password</Alert>}</Grid>
+            <Grid item container justifyContent="space-between">
+              <Grid item>
+                <Button size="small">Forget password</Button>
+              </Grid>
+              <Grid item>
+                <Button onClick={onLoginButtonClick} size="small" variant="contained">
+                  Log In
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Paper>
     </Grid>
   );
 };

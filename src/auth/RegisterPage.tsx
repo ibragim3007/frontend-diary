@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Grid, Paper, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -40,7 +40,11 @@ const fieldsForLogin: FieldsForLoginI = {
   },
 };
 
-const RegisterPage: React.FC = () => {
+interface RegisterPageProps {
+  mode: 'light' | 'dark';
+}
+
+const RegisterPage: React.FC<RegisterPageProps> = ({ mode }) => {
   const [fieldsValues, setFieldsValues] = useState<FieldsForLoginI>(fieldsForLogin);
   const handlerChangeFieldValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFieldsValues({ ...fieldsValues, [e.target.id]: { value: e.target.value } });
@@ -79,89 +83,98 @@ const RegisterPage: React.FC = () => {
       container
       justifyContent="center"
       alignItems="center"
-      style={{ height: '100vh', backgroundColor: COLORS.backgroundColor }}
+      style={{
+        height: '100vh',
+        backgroundColor: mode === 'light' ? COLORS.backgroundColor : COLORS.backgroundColorDark,
+      }}
     >
-      <Grid
-        item
-        style={{
-          backgroundColor: COLORS.landBackgroundColor,
-          width: 'clamp(300px, 60vw, 400px)',
-          padding: '30px 20px',
-          borderRadius: 5,
-        }}
-      >
-        <Grid spacing={2} direction="column" container>
-          <Grid alignItems="center" direction="column" container item>
-            <Typography variant="h4">Welcome to {TITLE}</Typography>
-            <NavLink to={links.login}>
-              <Typography variant="subtitle1">Already Sign Up?</Typography>
-            </NavLink>
-          </Grid>
-          <Grid item>
-            <InputField
-              id="email"
-              type="email"
-              value={fieldsValues.email.value}
-              error={fieldsValues.email.error}
-              handlerChangeValue={handlerChangeFieldValue}
-              helperText={fieldsValues.email.helpertext}
-              label="Enter your Email"
-            />
-          </Grid>
-          <Grid spacing={2} container direction="row" item>
-            <Grid xs item>
-              <InputField
-                id="firstname"
-                type="text"
-                value={fieldsValues.firstname.value}
-                error={fieldsValues.firstname.error}
-                handlerChangeValue={handlerChangeFieldValue}
-                label="Your firstname"
-              />
-            </Grid>
-            <Grid xs item>
-              <InputField
-                id="lastname"
-                type="text"
-                value={fieldsValues.lastname.value}
-                error={fieldsValues.lastname.error}
-                handlerChangeValue={handlerChangeFieldValue}
-                label="Your lastname"
-              />
-            </Grid>
-          </Grid>
-          <Grid item>
-            <InputField
-              id="password"
-              type="password"
-              value={fieldsValues.password.value}
-              error={fieldsValues.password.error}
-              handlerChangeValue={handlerChangeFieldValue}
-              label="Enter password"
-            />
-          </Grid>
-          <Grid item>
-            <InputField
-              id="repeatPassword"
-              type="password"
-              value={fieldsValues.repeatPassword.value}
-              error={fieldsValues.repeatPassword.error}
-              handlerChangeValue={handlerChangeFieldValue}
-              label="Repeat password"
-            />
-          </Grid>
-          <Grid item container justifyContent="space-between">
-            <Grid item>
-              <Button size="small">Forget password</Button>
+      <Paper>
+        <Grid
+          item
+          style={{
+            width: 'clamp(300px, 60vw, 400px)',
+            padding: '30px 20px',
+            borderRadius: 5,
+          }}
+        >
+          <Grid spacing={2} direction="column" container>
+            <Grid alignItems="center" direction="column" container item>
+              <Typography variant="h4">Welcome to {TITLE}</Typography>
+              <NavLink to={links.login} style={{ color: '#999' }}>
+                <Typography variant="subtitle1">Already Sign Up?</Typography>
+              </NavLink>
             </Grid>
             <Grid item>
-              <Button onClick={onRegisterButtonClick} size="small" disabled={loadingRegisterButton} variant="contained">
-                Sign Up
-              </Button>
+              <InputField
+                id="email"
+                type="email"
+                value={fieldsValues.email.value}
+                error={fieldsValues.email.error}
+                handlerChangeValue={handlerChangeFieldValue}
+                helperText={fieldsValues.email.helpertext}
+                label="Enter your Email"
+              />
+            </Grid>
+            <Grid spacing={2} container direction="row" item>
+              <Grid xs item>
+                <InputField
+                  id="firstname"
+                  type="text"
+                  value={fieldsValues.firstname.value}
+                  error={fieldsValues.firstname.error}
+                  handlerChangeValue={handlerChangeFieldValue}
+                  label="Your firstname"
+                />
+              </Grid>
+              <Grid xs item>
+                <InputField
+                  id="lastname"
+                  type="text"
+                  value={fieldsValues.lastname.value}
+                  error={fieldsValues.lastname.error}
+                  handlerChangeValue={handlerChangeFieldValue}
+                  label="Your lastname"
+                />
+              </Grid>
+            </Grid>
+            <Grid item>
+              <InputField
+                id="password"
+                type="password"
+                value={fieldsValues.password.value}
+                error={fieldsValues.password.error}
+                handlerChangeValue={handlerChangeFieldValue}
+                label="Enter password"
+              />
+            </Grid>
+            <Grid item>
+              <InputField
+                id="repeatPassword"
+                type="password"
+                value={fieldsValues.repeatPassword.value}
+                error={fieldsValues.repeatPassword.error}
+                handlerChangeValue={handlerChangeFieldValue}
+                label="Repeat password"
+              />
+            </Grid>
+            <Grid item container justifyContent="space-between">
+              <Grid item>
+                <Button size="small">Forget password</Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  onClick={onRegisterButtonClick}
+                  size="small"
+                  disabled={loadingRegisterButton}
+                  variant="contained"
+                >
+                  Sign Up
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Paper>
     </Grid>
   );
 };

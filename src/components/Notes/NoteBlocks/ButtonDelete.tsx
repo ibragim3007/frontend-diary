@@ -48,7 +48,12 @@ const ButtonDelete: React.FC<ButtonDeleteProps> = ({ titleNote, idNote, deleteNo
   };
   return (
     <Grid item>
-      <IconButton onClick={handleClickOpen} size="small" style={{ color: 'rgba(0,0, 0,0.2)' }} aria-label="update">
+      <IconButton
+        onClick={handleClickOpen}
+        size="small"
+        style={{ color: 'rgba(100,100, 100,0.8)' }}
+        aria-label="update"
+      >
         <DeleteIcon />
       </IconButton>
       <Dialog open={openModal} onClose={handleCloseModal}>

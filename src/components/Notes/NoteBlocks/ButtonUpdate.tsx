@@ -51,7 +51,12 @@ const ButtonUpdate: React.FC<ButtonUpdateProps> = ({ note, updateNote }) => {
   };
   return (
     <Grid item>
-      <IconButton onClick={handleClickOpen} style={{ color: 'rgba(0,0, 0,0.2)' }} size="small" aria-label="delete">
+      <IconButton
+        onClick={handleClickOpen}
+        style={{ color: 'rgba(100,100, 100,0.8)' }}
+        size="small"
+        aria-label="delete"
+      >
         <EditIcon />
       </IconButton>
       <Dialog open={openModal} onClose={handleCloseModal}>

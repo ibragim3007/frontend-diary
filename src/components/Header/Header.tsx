@@ -60,12 +60,14 @@ const Header: React.FC = () => {
           ) : (
             <Grid alignItems="center" spacing={0} container item>
               <Grid item>
-                <IconButton size="large" style={{ color: COLORS.backgroundColor }}>
-                  <AccountBoxIcon />
-                </IconButton>
+                <NavLink to={links.profile} style={{ textDecoration: 'none' }}>
+                  <IconButton size="large">
+                    <AccountBoxIcon />
+                  </IconButton>
+                </NavLink>
               </Grid>
               <Grid item>
-                <IconButton onClick={exitButton} size="large" style={{ color: COLORS.backgroundColor }}>
+                <IconButton onClick={exitButton} size="large">
                   <ExitToAppIcon />
                 </IconButton>
               </Grid>

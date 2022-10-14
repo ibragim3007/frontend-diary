@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { API_LOCAL } from '../../../config';
 import { usePostHttp } from '../../../hooks/post.http.hook';
 import { NoteInterface } from '../../../interfaces';
-import { COLORS } from '../../../UI/colors';
 import MainText from './MainText';
 import SubText from './SubText';
 
@@ -52,7 +51,9 @@ const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
       text: descriptionValue.value,
     };
     const result = await request(dataForSend);
-    console.log(result);
+
+    setTitleValue({ ...titleValue, value: '' });
+    setDescriptionValue({ ...descriptionValue, value: '' });
     if (result) {
       addNewNotes(result);
     }

@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@emotion/react';
 import { createTheme, CssBaseline } from '@mui/material';
-import { amber, deepOrange, grey, purple, red } from '@mui/material/colors';
-import React, { useEffect, useState } from 'react';
+import { grey, purple } from '@mui/material/colors';
+import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import LoaderCheckAuth from '../auth/LoadingAuth';
 import LoginPage from '../auth/LoginPage';
@@ -18,13 +18,7 @@ import { COLORS } from '../UI/colors';
 import { links } from './routerConfig';
 
 const RouterApp: React.FC = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const { data, loading } = useHttp<UserInterface>(`${API_LOCAL}/api/auth/me`, 'GET');
-  useEffect(() => {
-    if (data && !loading) {
-      setIsAuth(true);
-    }
-  }, [loading, data]);
+  const { data, loading } = useHttp<UserInterface>(`${API_LOCAL}/api/auth/me`);
 
   const currentThemMode = localStorage.getItem('theme');
   const [mode, setMode] = React.useState<'light' | 'dark'>(currentThemMode === 'light' ? 'light' : 'dark');
@@ -39,9 +33,7 @@ const RouterApp: React.FC = () => {
   );
 
   const themeStorage = localStorage.getItem('theme');
-  if (!themeStorage) {
-    localStorage.setItem('theme', 'light');
-  }
+  if (!themeStorage) localStorage.setItem('theme', 'light');
 
   const theme = React.useMemo(
     () =>
@@ -56,27 +48,32 @@ const RouterApp: React.FC = () => {
     [mode],
   );
 
-  if (loading) return <LoaderCheckAuth />;
+  if (loading)
+    return (
+      <ThemeProvider theme={theme}>
+        <LoaderCheckAuth />
+      </ThemeProvider>
+    );
 
   return (
-    <userContext.Provider value={{ user: data! }}>
+    <userContext.Provider value={{ user: data ? data : null }}>
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <BrowserRouter>
-            {!isAuth ? (
+            {data?.email === undefined || !data ? (
               <Routes>
                 <Route path={links.login} element={<LoginPage mode={mode} />} />
                 <Route path={links.registration} element={<RegisterPage mode={mode} />} />
-                <Route path="/*" element={<Navigate to={links.login} />} />
+                <Route path="*" element={<Navigate to={links.login} />} />
               </Routes>
             ) : (
               <div style={{ backgroundColor: mode === 'light' ? COLORS.backgroundColor : COLORS.backgroundColorDark }}>
                 <Header />
                 <Routes>
                   <Route path={links.notes} element={<PageWithNotes />} />
-                  <Route path={links.profile} element={<ProfilePage />} />
-                  <Route path={'/*'} element={<Navigate to={links.notes} />} />
+                  <Route path={`${links.profile}/:profileId`} element={<ProfilePage />} />
+                  <Route path={'*'} element={<Navigate to={links.notes} />} />
                 </Routes>
               </div>
             )}

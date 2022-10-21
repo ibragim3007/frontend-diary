@@ -1,28 +1,32 @@
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Button, Grid, IconButton, Paper, Typography, useMediaQuery } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { TITLE } from '../../config';
+import { userContext } from '../../context/userContext';
 import { links } from '../../router/routerConfig';
 import { COLORS } from '../../UI/colors';
 
 const Header: React.FC = () => {
   const matches = useMediaQuery('(min-width: 500px)');
   const exitButton = (): void => {
-    console.log('asd');
     localStorage.removeItem('token');
     window.location.reload();
   };
+
+  const { user } = useContext(userContext);
   return (
-    <Paper>
+    <Paper style={{ borderRadius: 0 }}>
       <Grid
         alignItems="center"
         container
         style={{
           height: COLORS.headerHeight,
           padding: '10px 20px',
-          borderRadius: '0px 0px 10px 10px',
+          borderRadius: '0px 0px 0px 0px',
+          maxWidth: 1920,
+          margin: 'auto',
         }}
         justifyContent="space-between"
       >
@@ -45,7 +49,7 @@ const Header: React.FC = () => {
           {matches ? (
             <Grid alignItems="center" spacing={3} container item>
               <Grid item>
-                <NavLink to={links.profile} style={{ textDecoration: 'none' }}>
+                <NavLink to={`${links.profile}/${user ? user?._id : ''}`} style={{ textDecoration: 'none' }}>
                   <Button size="large" startIcon={<AccountBoxIcon />}>
                     Profile
                   </Button>

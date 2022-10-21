@@ -1,22 +1,19 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-type METHODS = 'GET' | 'get' | 'POST' | 'post' | 'PUT' | 'put' | 'DELETE' | 'delete';
+type METHODS = 'GET' | 'get';
 
-export const useHttp = <T,>(
-  url: string,
-  method?: METHODS,
-  body?: unknown,
-): { data: T | undefined; loading: boolean; error: unknown } => {
+export const useHttp = <T,>(url: string): { data: T | undefined; loading: boolean; error: unknown } => {
   const [data, setData] = useState<T>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
+    setLoading(false);
     if (token) {
-      if (method === 'get' || method === 'GET') {
-        setLoading(true);
+      setLoading(true);
+      try {
         axios
           .get<T>(url, { headers: { authorization: token ? `Bearer ${token}` : '' } })
           .then(response => {
@@ -25,32 +22,15 @@ export const useHttp = <T,>(
           })
           .catch(error => {
             setError(error);
-            setLoading(false);
           })
           .finally(() => {
             setLoading(false);
           });
+      } catch (e) {
+        console.log(e);
       }
-      setLoading(false);
-      if (method === 'POST' || method === 'post') {
-        setLoading(true);
-        axios
-          .post<T>(url, { headers: { authorization: token ? `Bearer ${token}` : '' }, body: body })
-          .then(response => {
-            setData(response.data);
-            setLoading(false);
-          })
-          .catch(error => {
-            setError(error);
-            setLoading(false);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      }
-      setLoading(false);
     }
-  }, [body, method, token, url]);
+  }, [token, url]);
 
   return { data, loading, error };
 };

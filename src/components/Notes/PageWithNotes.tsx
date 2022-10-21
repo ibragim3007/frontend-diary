@@ -1,17 +1,22 @@
-import { Grid } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { API_LOCAL } from '../../config';
 import { useHttp } from '../../hooks/http.auth.hook';
 import { usePostHttp } from '../../hooks/post.http.hook';
 import { NoteInterface } from '../../interfaces';
-import { COLORS } from '../../UI/colors';
 import CustomSnackBar from '../helper/CustomSnack';
 import AddNewNote from './AddNewNote/AddNewNote';
 import NoteBlocks from './NoteBlocks/NoteBlocks';
 
-const PageWithNotes: React.FC = () => {
-  const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllNotes`, 'GET');
+interface PageWithNotesProps {
+  changeQuantityNotes?: (newNumber: number) => void;
+}
+
+const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes }) => {
+  const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllNotes`);
   const [notes, setNotes] = useState<NoteInterface[]>();
+
+  changeQuantityNotes ? changeQuantityNotes(notes ? notes?.length : 0) : null;
 
   const addNewNotes = (note: NoteInterface): void => {
     if (notes) setNotes([note, ...notes]);
@@ -49,7 +54,7 @@ const PageWithNotes: React.FC = () => {
     setOpenSnack(true);
   };
 
-  if (loading) return <h1>Loading</h1>;
+  if (loading) return <CircularProgress />;
 
   return (
     <Grid

@@ -1,7 +1,6 @@
 import { Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { NoteInterface } from '../../../interfaces';
-import { COLORS } from '../../../UI/colors';
 import { getFullTime } from '../../helper/convertTime';
 import ButtonDelete from './ButtonDelete';
 import ButtonUpdate from './ButtonUpdate';

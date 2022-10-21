@@ -13,7 +13,7 @@ interface PageWithNotesProps {
 }
 
 const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes }) => {
-  const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllNotes`);
+  const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllMyNotes`);
   const [notes, setNotes] = useState<NoteInterface[]>();
 
   changeQuantityNotes ? changeQuantityNotes(notes ? notes?.length : 0) : null;

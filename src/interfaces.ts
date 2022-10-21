@@ -5,6 +5,7 @@ export interface NoteInterface {
     readonly createdAt: Date;
     updateAt: Date;
   };
+  user?: UserInterface;
   readonly idUser?: string;
   readonly _id: string;
 }

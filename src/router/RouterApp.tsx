@@ -7,7 +7,7 @@ import LoaderCheckAuth from '../auth/LoadingAuth';
 import LoginPage from '../auth/LoginPage';
 import RegisterPage from '../auth/RegisterPage';
 import Header from '../components/Header/Header';
-import PageWithNotes from '../components/Notes/PageWithNotes';
+import PageWithPublicNotes from '../components/Notes/PageWithPublicNotes';
 import ProfilePage from '../components/ProfilePage/ProfilePage';
 import { API_LOCAL } from '../config';
 import { ColorModeContext } from '../context/themeContext';
@@ -71,7 +71,7 @@ const RouterApp: React.FC = () => {
               <div style={{ backgroundColor: mode === 'light' ? COLORS.backgroundColor : COLORS.backgroundColorDark }}>
                 <Header />
                 <Routes>
-                  <Route path={links.notes} element={<PageWithNotes />} />
+                  <Route path={links.notes} element={<PageWithPublicNotes />} />
                   <Route path={`${links.profile}/:profileId`} element={<ProfilePage />} />
                   <Route path={'*'} element={<Navigate to={links.notes} />} />
                 </Routes>

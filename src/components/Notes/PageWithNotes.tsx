@@ -54,6 +54,19 @@ const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes }) =>
     setOpenSnack(true);
   };
 
+  const changePublicMutation = usePostHttp(`${API_LOCAL}/api/note/changePublic`);
+  const changePublicNote = async (id: string, isPublic: boolean): Promise<void> => {
+    setNotes(
+      notes?.map(note => {
+        if (note._id === id) note.isPublic = !note.isPublic;
+        return note;
+      }),
+    );
+    const data = await changePublicMutation.request({ _id: id, isPublic: !isPublic });
+    console.log(data);
+    setOpenSnack(true);
+  };
+
   if (loading) return <CircularProgress />;
 
   return (
@@ -64,7 +77,7 @@ const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes }) =>
     >
       <AddNewNote addNewNotes={addNewNotes} />
       {!loading && notes ? (
-        <NoteBlocks updateNote={updateNote} deleteNote={deleteNote} notes={notes} />
+        <NoteBlocks changePublicNote={changePublicNote} updateNote={updateNote} deleteNote={deleteNote} notes={notes} />
       ) : (
         <h1 style={{ color: 'white' }}>Loading...</h1>
       )}

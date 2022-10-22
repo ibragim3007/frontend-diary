@@ -7,9 +7,10 @@ interface NoteBlocksProps {
   notes: NoteInterface[];
   deleteNote: (id: string) => Promise<void>;
   updateNote: (id: string, title: string, text: string) => Promise<void>;
+  changePublicNote: (id: string, isPublic: boolean) => void;
 }
 
-const NoteBlocks: React.FC<NoteBlocksProps> = ({ notes, deleteNote, updateNote }) => {
+const NoteBlocks: React.FC<NoteBlocksProps> = ({ notes, deleteNote, updateNote, changePublicNote }) => {
   return (
     <Grid
       style={{
@@ -23,7 +24,15 @@ const NoteBlocks: React.FC<NoteBlocksProps> = ({ notes, deleteNote, updateNote }
       }}
     >
       {notes?.map(note => {
-        return <NoteBlock updateNote={updateNote} deleteNote={deleteNote} key={note._id} note={note} />;
+        return (
+          <NoteBlock
+            changePublicNote={changePublicNote}
+            updateNote={updateNote}
+            deleteNote={deleteNote}
+            key={note._id}
+            note={note}
+          />
+        );
       })}
     </Grid>
   );

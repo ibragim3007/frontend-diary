@@ -1,5 +1,6 @@
 import { Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { NoteInterface } from '../../../interfaces';
 import { getFullTime } from '../../helper/convertTime';
 
@@ -8,6 +9,7 @@ interface NoteBlockPublicProps {
 }
 
 const NoteBlockPublic: React.FC<NoteBlockPublicProps> = ({ note }) => {
+  const theme = localStorage.getItem('theme');
   return (
     <Paper>
       <Grid style={{ borderRadius: 10, padding: 20 }}>
@@ -18,7 +20,12 @@ const NoteBlockPublic: React.FC<NoteBlockPublicProps> = ({ note }) => {
           style={{ borderBottom: '1px solid rgba(125, 125, 125, 0.2)', marginBottom: 7, paddingBottom: 7 }}
         >
           <Typography variant="h5">
-            {note.user?.firstname} {note.user?.lastname}
+            <NavLink
+              style={{ cursor: 'pointer', textDecoration: 'none', color: theme === 'light' ? '#111' : '#eee' }}
+              to={`/profile/${note.idUser!}`}
+            >
+              {note.user?.firstname} {note.user?.lastname}
+            </NavLink>
           </Typography>
           <Typography variant="subtitle1" style={{ color: '#888', fontSize: 12, fontStyle: 'italic' }}>
             {getFullTime(note.timestamps.createdAt)}

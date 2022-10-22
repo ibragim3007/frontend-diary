@@ -1,4 +1,4 @@
-import { CircularProgress, Grid } from '@mui/material';
+import { CircularProgress, Grid, Paper, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { API_LOCAL } from '../../config';
 import { useHttp } from '../../hooks/http.auth.hook';
@@ -32,9 +32,15 @@ const PageWithPublicNotes: React.FC = () => {
     <Grid
       style={{
         marginTop: 10,
+        minHeight: '100vh',
       }}
     >
-      <AddNewNote addNewNotes={addNewNotes} />
+      <Paper style={{ padding: 10 }}>
+        <Typography variant="h6" style={{ maxWidth: 600, margin: 'auto' }}>
+          Here you can see the notes of users of this service, in order to add and make your entry visible to everyone,
+          you need to go to your profile and mark the desired checkbox
+        </Typography>
+      </Paper>
       {!loading && notes ? <NoteBlocksPublic notes={notes} /> : <h1 style={{ color: 'white' }}>Loading...</h1>}
       <CustomSnackBar openSnackBar={openSnack} handleCloseSnackBar={handleCloseSnack} severity="success">
         Changes saved

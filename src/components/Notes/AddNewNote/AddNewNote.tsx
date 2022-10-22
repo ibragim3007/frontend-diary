@@ -1,5 +1,5 @@
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import { Button, Grid, Paper, TextField } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid, Paper, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { API_LOCAL } from '../../../config';
 import { usePostHttp } from '../../../hooks/post.http.hook';
@@ -27,6 +27,12 @@ const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
     error: false,
   });
 
+  const [isPublic, setIsPublic] = useState<boolean>(false);
+
+  const handlerChangePublic = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setIsPublic(event.target.checked);
+  };
+
   const handlerChangeValueTitle = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setTitleValue({ ...titleValue, value: e.target.value });
 
@@ -49,6 +55,7 @@ const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
     const dataForSend = {
       title: titleValue.value,
       text: descriptionValue.value,
+      isPublic: isPublic,
     };
     const result = await request(dataForSend);
 
@@ -95,10 +102,18 @@ const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
               fullWidth
             />
           </Grid>
-          <Grid container justifyContent="flex-end" item>
-            <Button onClick={ClickButtonAddNewNote} disabled={loading} variant="outlined" startIcon={<AddBoxIcon />}>
-              Add new note
-            </Button>
+          <Grid container justifyContent="space-between" item>
+            <Grid item>
+              <FormControlLabel
+                control={<Checkbox checked={isPublic} onChange={handlerChangePublic} />}
+                label="Make it public?"
+              />
+            </Grid>
+            <Grid item>
+              <Button onClick={ClickButtonAddNewNote} disabled={loading} variant="outlined" startIcon={<AddBoxIcon />}>
+                Add new note
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

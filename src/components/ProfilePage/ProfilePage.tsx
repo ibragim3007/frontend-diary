@@ -1,18 +1,19 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Grid, IconButton, Paper, Popover, Typography, useTheme } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import LoaderCheckAuth from '../../auth/LoadingAuth';
 import { API_LOCAL } from '../../config';
 import { ColorModeContext } from '../../context/themeContext';
+import { userContext } from '../../context/userContext';
 import { useHttp } from '../../hooks/http.auth.hook';
 import { UserInterface } from '../../interfaces';
 import { getTime } from '../helper/convertTime';
+import CustomSnackBar from '../helper/CustomSnack';
 import PageWithNotes from '../Notes/PageWithNotes';
 import InfoItemProfile from './InfoItemProfile';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CustomSnackBar from '../helper/CustomSnack';
 
 const ProfilePage: React.FC = () => {
   const [currentUserPage, setCurrentUserPage] = useState<UserInterface>();
@@ -21,6 +22,7 @@ const ProfilePage: React.FC = () => {
   const colorMode = React.useContext(ColorModeContext);
   const [quantityNotes, setQuantityNotes] = useState<number>(0);
   const changeQuantityNotes = (newNumber: number): void => setQuantityNotes(newNumber);
+  const { user } = useContext(userContext);
 
   const [openSnack, setOpenSnack] = React.useState(false);
   const handleCloseSnack = (event: React.SyntheticEvent | Event, reason?: string): void => {
@@ -32,6 +34,8 @@ const ProfilePage: React.FC = () => {
   const { data, loading } = useHttp<UserInterface>(
     `${API_LOCAL}/api/auth/user/${params.profileId ? params.profileId : ''}`,
   );
+
+  const isYourAccount = user?._id === params.profileId;
 
   useEffect(() => {
     if (data && !loading) {
@@ -122,7 +126,7 @@ const ProfilePage: React.FC = () => {
           </Grid>
         </Grid>
       </Paper>
-      <PageWithNotes changeQuantityNotes={changeQuantityNotes} />
+      {isYourAccount && <PageWithNotes changeQuantityNotes={changeQuantityNotes} />}
     </Grid>
   );
 };

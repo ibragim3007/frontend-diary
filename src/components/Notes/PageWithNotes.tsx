@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { API_LOCAL } from '../../config';
 import { useHttp } from '../../hooks/http.auth.hook';
 import { usePostHttp } from '../../hooks/post.http.hook';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../interfaces';
 import CustomSnackBar from '../helper/CustomSnack';
 import AddNewNote from './AddNewNote/AddNewNote';

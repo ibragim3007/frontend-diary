@@ -2,18 +2,14 @@ import { CircularProgress, Grid, Paper, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { API_LOCAL } from '../../config';
 import { useHttp } from '../../hooks/http.auth.hook';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../interfaces';
 import CustomSnackBar from '../helper/CustomSnack';
-import AddNewNote from './AddNewNote/AddNewNote';
 import NoteBlocksPublic from './NoteBlocksPublic/NoteBlocksPublic';
 
 const PageWithPublicNotes: React.FC = () => {
   const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllPublicNotes`);
   const [notes, setNotes] = useState<NoteInterface[]>();
-
-  const addNewNotes = (note: NoteInterface): void => {
-    if (notes) setNotes([note, ...notes]);
-  };
 
   const [openSnack, setOpenSnack] = React.useState(false);
   const handleCloseSnack = (event: React.SyntheticEvent | Event, reason?: string): void => {

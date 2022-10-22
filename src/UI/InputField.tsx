@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { InputAdornment, SvgIconTypeMap, TextField } from '@mui/material';
 import React from 'react';
 

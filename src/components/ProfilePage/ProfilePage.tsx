@@ -9,6 +9,7 @@ import { API_LOCAL } from '../../config';
 import { ColorModeContext } from '../../context/themeContext';
 import { userContext } from '../../context/userContext';
 import { useHttp } from '../../hooks/http.auth.hook';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UserInterface } from '../../interfaces';
 import { getTime } from '../helper/convertTime';
 import CustomSnackBar from '../helper/CustomSnack';

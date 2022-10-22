@@ -1,6 +1,7 @@
 import { Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../../interfaces';
 import { getFullTime } from '../../helper/convertTime';
 

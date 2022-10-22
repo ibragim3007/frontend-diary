@@ -2,6 +2,7 @@ import PublicIcon from '@mui/icons-material/Public';
 import PublicOffIcon from '@mui/icons-material/PublicOff';
 import { Grid, IconButton } from '@mui/material';
 import React from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../../interfaces';
 
 interface PublicButtonProps {

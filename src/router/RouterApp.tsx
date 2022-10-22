@@ -13,6 +13,7 @@ import { API_LOCAL } from '../config';
 import { ColorModeContext } from '../context/themeContext';
 import { userContext } from '../context/userContext';
 import { useHttp } from '../hooks/http.auth.hook';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UserInterface } from '../interfaces';
 import { COLORS } from '../UI/colors';
 import { links } from './routerConfig';

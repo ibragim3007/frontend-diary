@@ -1,5 +1,6 @@
 import { Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../../interfaces';
 import { getFullTime } from '../../helper/convertTime';
 import ButtonDelete from './ButtonDelete';

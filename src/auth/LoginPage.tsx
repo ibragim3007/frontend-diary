@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { API_LOCAL, TITLE } from '../config';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FieldInterface, TokenResult } from '../interfaces';
 import { links } from '../router/routerConfig';
 import { COLORS } from '../UI/colors';

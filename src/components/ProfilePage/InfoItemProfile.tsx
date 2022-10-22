@@ -7,7 +7,7 @@ interface InfoItemProfileProps {
   hide?: boolean;
 }
 
-const InfoItemProfile: React.FC<InfoItemProfileProps> = ({ info, data, hide }) => {
+const InfoItemProfile: React.FC<InfoItemProfileProps> = ({ info, data }) => {
   return (
     <Grid
       justifyContent="space-between"

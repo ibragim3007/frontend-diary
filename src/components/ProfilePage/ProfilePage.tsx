@@ -108,7 +108,7 @@ const ProfilePage: React.FC = () => {
                   <Typography sx={{ p: 1 }}>Copy and share your profile</Typography>
                 </Popover>
                 <CustomSnackBar openSnackBar={openSnack} handleCloseSnackBar={handleCloseSnack} severity="success">
-                  Copied!
+                  Copied
                 </CustomSnackBar>
               </Grid>
               <Grid>

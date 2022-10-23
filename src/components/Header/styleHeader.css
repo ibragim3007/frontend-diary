@@ -1,0 +1,11 @@
+.link-active {
+    border-bottom: 3px solid purple;
+    padding: 10px;
+}
+
+.link-active-mobile {
+    border: 2px solid purple;
+    padding: 3px 3px 6px 3px;
+    background-color: rgba(189, 53, 235, 0.1);
+    border-radius: 10px;
+}

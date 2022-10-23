@@ -1,5 +1,6 @@
 import { CircularProgress, Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { API_LOCAL } from '../../config';
 import { useHttp } from '../../hooks/http.auth.hook';
 import { usePostHttp } from '../../hooks/post.http.hook';
@@ -8,13 +9,17 @@ import { NoteInterface } from '../../interfaces';
 import CustomSnackBar from '../helper/CustomSnack';
 import AddNewNote from './AddNewNote/AddNewNote';
 import NoteBlocks from './NoteBlocks/NoteBlocks';
+import NoteBlocksPublic from './NoteBlocksPublic/NoteBlocksPublic';
 
 interface PageWithNotesProps {
   changeQuantityNotes?: (newNumber: number) => void;
+  isYourAccount: boolean;
 }
 
-const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes }) => {
-  const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllMyNotes`);
+const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes, isYourAccount }) => {
+  const params = useParams();
+  console.log(params.profileId);
+  const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllNotes/${params.profileId!}`);
   const [notes, setNotes] = useState<NoteInterface[]>();
 
   changeQuantityNotes ? changeQuantityNotes(notes ? notes?.length : 0) : null;
@@ -76,9 +81,18 @@ const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes }) =>
         marginTop: 10,
       }}
     >
-      <AddNewNote addNewNotes={addNewNotes} />
+      {isYourAccount && <AddNewNote addNewNotes={addNewNotes} />}
       {!loading && notes ? (
-        <NoteBlocks changePublicNote={changePublicNote} updateNote={updateNote} deleteNote={deleteNote} notes={notes} />
+        isYourAccount ? (
+          <NoteBlocks
+            changePublicNote={changePublicNote}
+            updateNote={updateNote}
+            deleteNote={deleteNote}
+            notes={notes}
+          />
+        ) : (
+          <NoteBlocksPublic notes={notes} />
+        )
       ) : (
         <h1 style={{ color: 'white' }}>Loading...</h1>
       )}

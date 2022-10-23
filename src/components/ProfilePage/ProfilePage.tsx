@@ -127,7 +127,7 @@ const ProfilePage: React.FC = () => {
           </Grid>
         </Grid>
       </Paper>
-      {isYourAccount && <PageWithNotes changeQuantityNotes={changeQuantityNotes} />}
+      <PageWithNotes isYourAccount={isYourAccount} changeQuantityNotes={changeQuantityNotes} />
     </Grid>
   );
 };

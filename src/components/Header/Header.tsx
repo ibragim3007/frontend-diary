@@ -1,20 +1,12 @@
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { Button, Grid, IconButton, Paper, Typography, useMediaQuery } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { TITLE } from '../../config';
 import { userContext } from '../../context/userContext';
-import { links } from '../../router/routerConfig';
 import { COLORS } from '../../UI/colors';
+import MenuButtons from './MenuButtons';
 
 const Header: React.FC = () => {
-  const matches = useMediaQuery('(min-width: 500px)');
-  const exitButton = (): void => {
-    localStorage.removeItem('token');
-    window.location.reload();
-  };
-
   const { user } = useContext(userContext);
   return (
     <Paper style={{ borderRadius: 0 }}>
@@ -46,37 +38,7 @@ const Header: React.FC = () => {
           </Grid>
         </NavLink>
         <Grid item>
-          {matches ? (
-            <Grid alignItems="center" spacing={3} container item>
-              <Grid item>
-                <NavLink to={`${links.profile}/${user ? user?._id : ''}`} style={{ textDecoration: 'none' }}>
-                  <Button size="large" startIcon={<AccountBoxIcon />}>
-                    Profile
-                  </Button>
-                </NavLink>
-              </Grid>
-              <Grid item>
-                <Button onClick={exitButton} size="large" startIcon={<ExitToAppIcon />}>
-                  Exit
-                </Button>
-              </Grid>
-            </Grid>
-          ) : (
-            <Grid alignItems="center" spacing={0} container item>
-              <Grid item>
-                <NavLink to={`${links.profile}/${user ? user?._id : ''}`} style={{ textDecoration: 'none' }}>
-                  <IconButton size="large">
-                    <AccountBoxIcon />
-                  </IconButton>
-                </NavLink>
-              </Grid>
-              <Grid item>
-                <IconButton onClick={exitButton} size="large">
-                  <ExitToAppIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
-          )}
+          <MenuButtons user={user} />
         </Grid>
       </Grid>
     </Paper>

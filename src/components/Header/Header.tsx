@@ -64,7 +64,7 @@ const Header: React.FC = () => {
           ) : (
             <Grid alignItems="center" spacing={0} container item>
               <Grid item>
-                <NavLink to={links.profile} style={{ textDecoration: 'none' }}>
+                <NavLink to={`${links.profile}/${user ? user?._id : ''}`} style={{ textDecoration: 'none' }}>
                   <IconButton size="large">
                     <AccountBoxIcon />
                   </IconButton>

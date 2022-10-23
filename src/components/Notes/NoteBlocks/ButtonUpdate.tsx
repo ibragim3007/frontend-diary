@@ -87,8 +87,10 @@ const ButtonUpdate: React.FC<ButtonUpdateProps> = ({ note, updateNote }) => {
         </DialogContent>
         <DialogActions>
           <Grid container justifyContent="space-between">
-            <Button onClick={handleCloseModal}>Cancel</Button>
-            <Button variant="contained" color="warning" onClick={handleConfirmButton}>
+            <Button onClick={handleCloseModal} color="info">
+              Cancel
+            </Button>
+            <Button variant="contained" color="success" onClick={handleConfirmButton}>
               CONFIRM
             </Button>
           </Grid>

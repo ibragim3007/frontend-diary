@@ -18,7 +18,6 @@ interface PageWithNotesProps {
 
 const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes, isYourAccount }) => {
   const params = useParams();
-  console.log(params.profileId);
   const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllNotes/${params.profileId!}`);
   const [notes, setNotes] = useState<NoteInterface[]>();
 
@@ -68,8 +67,7 @@ const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes, isYo
         return note;
       }),
     );
-    const data = await changePublicMutation.request({ _id: id, isPublic: !isPublic });
-    console.log(data);
+    await changePublicMutation.request({ _id: id, isPublic: !isPublic });
     setOpenSnack(true);
   };
 

@@ -16,7 +16,6 @@ export const AddLike = async (
   notes: NoteInterface[],
   setNotes: React.Dispatch<React.SetStateAction<NoteInterface[] | undefined>>,
 ): Promise<void> => {
-  await request(`${API_LOCAL}/api/note/likeNote`, { idNote, idUser: user._id, isLiked });
   if (isLiked) {
     setNotes(
       notes?.map(note => {
@@ -36,4 +35,5 @@ export const AddLike = async (
       }),
     );
   }
+  await request(`${API_LOCAL}/api/note/likeNote`, { idNote, idUser: user._id, isLiked });
 };

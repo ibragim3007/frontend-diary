@@ -8,6 +8,8 @@ import MenuButtons from './MenuButtons';
 
 const Header: React.FC = () => {
   const { user } = useContext(userContext);
+  const theme = localStorage.getItem('theme');
+
   return (
     <Paper style={{ borderRadius: 0 }}>
       <Grid
@@ -31,6 +33,7 @@ const Header: React.FC = () => {
                 letterSpacing: 1.4,
                 cursor: 'pointer',
                 fontWeight: 'bold',
+                color: theme === 'light' ? COLORS.backgroundColor : '#fff',
               }}
             >
               {TITLE}

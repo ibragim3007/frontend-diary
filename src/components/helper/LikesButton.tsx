@@ -1,19 +1,18 @@
-import React, { useContext } from 'react';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Grid, IconButton } from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Button, Grid, IconButton } from '@mui/material';
+import { motion } from 'framer-motion/dist/framer-motion';
+import React from 'react';
 import { NoteInterface } from '../../interfaces';
-import { userContext } from '../../context/userContext';
+import { COLORS } from '../../UI/colors';
 
 interface LikesButtonProps {
   note?: NoteInterface;
   handlerAddLike: (idNote: string, isLiked: boolean) => Promise<void>;
+  isLiked: boolean;
 }
 
-const LikesButton: React.FC<LikesButtonProps> = ({ note, handlerAddLike }) => {
-  const { user } = useContext(userContext);
-  const isLiked: boolean = note?.usersLiked.includes(user?._id!) ? true : false;
-
+const LikesButton: React.FC<LikesButtonProps> = ({ note, handlerAddLike, isLiked }) => {
   const clickLikeButton = async (): Promise<void> => {
     await handlerAddLike(note?._id!, isLiked);
   };
@@ -24,22 +23,26 @@ const LikesButton: React.FC<LikesButtonProps> = ({ note, handlerAddLike }) => {
         justifyContent="center"
         alignContent="center"
         style={{
-          backgroundColor: '#a6a6a614',
-          border: '1px solid #a6a6a669',
+          backgroundColor: '#99999913',
+          border: isLiked ? `1px solid ${COLORS.secondary}` : '1px solid #a6a6a637',
           display: 'flex',
           alignItems: 'center',
-          padding: '0px 8px',
+          padding: '0px 0px',
           borderRadius: 30,
         }}
       >
-        <Grid style={{ fontSize: 18 }} alignSelf="center" item>
-          {note?.usersLiked.length}
-        </Grid>
-        <Grid onClick={clickLikeButton} style={{ padding: 0 }} item>
-          <IconButton style={{ color: '#d60707be' }} aria-label="like button">
-            {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          </IconButton>
-        </Grid>
+        <motion.div whileTap={{ scale: 1.1 }}>
+          <Button style={{ borderRadius: 25, padding: 0 }} onClick={clickLikeButton}>
+            <Grid style={{ fontSize: 16, marginLeft: 4, marginRight: 0 }} alignSelf="center" item>
+              {note?.usersLiked.length}
+            </Grid>
+            <Grid item>
+              <IconButton size="small" style={{ color: COLORS.secondary }} aria-label="like button">
+                {isLiked ? <FavoriteIcon fontSize="inherit" /> : <FavoriteBorderIcon fontSize="inherit" />}
+              </IconButton>
+            </Grid>
+          </Button>
+        </motion.div>
       </Grid>
     </Grid>
   );

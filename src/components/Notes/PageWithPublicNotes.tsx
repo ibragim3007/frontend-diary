@@ -1,9 +1,11 @@
-import { CircularProgress, Grid, Paper, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { CircularProgress, Grid } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
 import { API_LOCAL } from '../../config';
+import { userContext } from '../../context/userContext';
 import { useHttp } from '../../hooks/http.auth.hook';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../interfaces';
+import { AddLike } from '../func/AddLike';
 import CustomSnackBar from '../helper/CustomSnack';
 import NoteBlocksPublic from './NoteBlocksPublic/NoteBlocksPublic';
 
@@ -16,6 +18,12 @@ const PageWithPublicNotes: React.FC = () => {
     if (reason === 'clickaway') return;
 
     setOpenSnack(false);
+  };
+
+  const { user } = useContext(userContext);
+
+  const handlerAddLike = async (idNote: string, isLiked: boolean): Promise<void> => {
+    await AddLike(user!, idNote, isLiked, notes!, setNotes);
   };
 
   useEffect(() => {
@@ -31,7 +39,11 @@ const PageWithPublicNotes: React.FC = () => {
         minHeight: '100vh',
       }}
     >
-      {!loading && notes ? <NoteBlocksPublic notes={notes} /> : <h1 style={{ color: 'white' }}>Loading...</h1>}
+      {!loading && notes ? (
+        <NoteBlocksPublic handlerAddLike={handlerAddLike} notes={notes} />
+      ) : (
+        <h1 style={{ color: 'white' }}>Loading...</h1>
+      )}
       <CustomSnackBar openSnackBar={openSnack} handleCloseSnackBar={handleCloseSnack} severity="success">
         Changes saved
       </CustomSnackBar>

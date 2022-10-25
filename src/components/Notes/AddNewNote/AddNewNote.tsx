@@ -70,7 +70,7 @@ const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
     <Paper>
       <Grid style={{ padding: 20, margin: 'auto', borderRadius: 10, maxWidth: 1920 }}>
         <Grid wrap="wrap" spacing={3} container>
-          <Grid lg={4} md={5} item>
+          <Grid lg={4} md={5} xs={12} item>
             <MainText>Title of the day</MainText>
             <SubText>Describe in a few words</SubText>
             <TextField
@@ -84,7 +84,7 @@ const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
               fullWidth
             />
           </Grid>
-          <Grid lg={8} md={7} item>
+          <Grid lg={8} md={7} xs={12} item>
             <MainText> Table of contents of the day</MainText>
             <SubText>
               Write what you think or what happend todat! Everything written here will remain confidential

@@ -5,6 +5,7 @@ import { links } from '../../router/routerConfig';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ChromeReaderModeIcon from '@mui/icons-material/ChromeReaderMode';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UserInterface } from '../../interfaces';
 import './styleHeader.css';
 

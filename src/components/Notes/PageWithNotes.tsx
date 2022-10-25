@@ -1,11 +1,13 @@
 import { CircularProgress, Grid } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { API_LOCAL } from '../../config';
+import { userContext } from '../../context/userContext';
 import { useHttp } from '../../hooks/http.auth.hook';
 import { usePostHttp } from '../../hooks/post.http.hook';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../interfaces';
+import { AddLike } from '../func/AddLike';
 import CustomSnackBar from '../helper/CustomSnack';
 import AddNewNote from './AddNewNote/AddNewNote';
 import NoteBlocks from './NoteBlocks/NoteBlocks';
@@ -71,6 +73,17 @@ const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes, isYo
     setOpenSnack(true);
   };
 
+  const { user } = useContext(userContext);
+
+  const handlerAddLike = async (idNote: string, isLiked: boolean): Promise<void> => {
+    console.log(idNote, isLiked, user);
+    await AddLike(user!, idNote, isLiked, notes!, setNotes);
+  };
+
+  useEffect(() => {
+    setNotes(data);
+  }, [data, loading]);
+
   if (loading) return <CircularProgress />;
 
   return (
@@ -89,7 +102,7 @@ const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes, isYo
             notes={notes}
           />
         ) : (
-          <NoteBlocksPublic notes={notes} />
+          <NoteBlocksPublic handlerAddLike={handlerAddLike} notes={notes} />
         )
       ) : (
         <h1 style={{ color: 'white' }}>Loading...</h1>

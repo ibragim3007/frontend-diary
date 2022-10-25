@@ -17,7 +17,7 @@ interface NoteBlockProps {
 const NoteBlock: React.FC<NoteBlockProps> = ({ note, deleteNote, updateNote, changePublicNote }) => {
   return (
     <Paper>
-      <Grid style={{ padding: 20, borderRadius: 10 }}>
+      <Grid style={{ padding: 20, borderRadius: 10, height: '100%' }}>
         <Grid
           alignItems="center"
           container
@@ -33,7 +33,7 @@ const NoteBlock: React.FC<NoteBlockProps> = ({ note, deleteNote, updateNote, cha
             {getFullTime(note.timestamps.createdAt)}
           </Typography>
         </Grid>
-        <Grid style={{ marginTop: 6 }} item>
+        <Grid alignContent="flex-end" style={{ marginTop: 6 }} item>
           <Typography style={{ fontSize: 14, lineHeight: 1.67, wordSpacing: 2.45 }}>{note.text}</Typography>
         </Grid>
         <Grid alignContent="flex-end" container justifyContent="space-between" style={{ marginTop: 5 }}>

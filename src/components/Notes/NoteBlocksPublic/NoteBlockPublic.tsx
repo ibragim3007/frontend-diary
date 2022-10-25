@@ -4,16 +4,18 @@ import { NavLink } from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../../interfaces';
 import { getFullTime } from '../../helper/convertTime';
+import LikesButton from '../../helper/LikesButton';
 
 interface NoteBlockPublicProps {
   note: NoteInterface;
+  handlerAddLike: (idNote: string, isLiked: boolean) => Promise<void>;
 }
 
-const NoteBlockPublic: React.FC<NoteBlockPublicProps> = ({ note }) => {
+const NoteBlockPublic: React.FC<NoteBlockPublicProps> = ({ note, handlerAddLike }) => {
   const theme = localStorage.getItem('theme');
   return (
     <Paper>
-      <Grid style={{ borderRadius: 10, padding: 20 }}>
+      <Grid alignContent="space-between" container style={{ borderRadius: 10, padding: 20, height: '100%' }}>
         <Grid
           container
           justifyContent="space-between"
@@ -37,6 +39,9 @@ const NoteBlockPublic: React.FC<NoteBlockPublicProps> = ({ note }) => {
           <Grid style={{ marginTop: 6 }} item>
             <Typography style={{ fontSize: 14, lineHeight: 1.67, wordSpacing: 2.45 }}>{note.text}</Typography>
           </Grid>
+        </Grid>
+        <Grid container alignItems="center" item>
+          <LikesButton handlerAddLike={handlerAddLike} note={note} />
         </Grid>
       </Grid>
     </Paper>

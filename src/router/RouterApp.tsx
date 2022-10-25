@@ -62,7 +62,7 @@ const RouterApp: React.FC = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <BrowserRouter>
-            {data?.email === undefined || !data ? (
+            {!data ? (
               <Routes>
                 <Route path={links.login} element={<LoginPage mode={mode} />} />
                 <Route path={links.registration} element={<RegisterPage mode={mode} />} />

@@ -6,9 +6,10 @@ import NoteBlockPublic from './NoteBlockPublic';
 
 interface NoteBlocksPublicProps {
   notes: NoteInterface[];
+  handlerAddLike: (idNote: string, isLiked: boolean) => Promise<void>;
 }
 
-const NoteBlocksPublic: React.FC<NoteBlocksPublicProps> = ({ notes }) => {
+const NoteBlocksPublic: React.FC<NoteBlocksPublicProps> = ({ notes, handlerAddLike }) => {
   return (
     <Grid
       style={{
@@ -22,7 +23,7 @@ const NoteBlocksPublic: React.FC<NoteBlocksPublicProps> = ({ notes }) => {
       }}
     >
       {notes?.map(note => {
-        return <NoteBlockPublic key={note._id} note={note} />;
+        return <NoteBlockPublic handlerAddLike={handlerAddLike} key={note._id} note={note} />;
       })}
     </Grid>
   );

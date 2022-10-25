@@ -9,6 +9,7 @@ export interface NoteInterface {
   user?: UserInterface;
   readonly idUser?: string;
   readonly _id: string;
+  usersLiked: string[];
 }
 
 export interface UserInterface {
@@ -19,6 +20,7 @@ export interface UserInterface {
   password: string;
   dateOfBirhDate?: Date;
   readonly createdAt: Date;
+  notesLiked?: string[];
 }
 
 export interface TokenUserInfo {

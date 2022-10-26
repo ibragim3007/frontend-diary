@@ -1,0 +1,30 @@
+.link-profile {
+    transition: 0.5s ease;
+    text-decoration: none;
+    box-sizing: border-box;
+    border-right: 1px solid rgba(153, 153, 153, 0.423);
+}
+
+.link-profile:hover {
+    background-color: #8b8b8b1a;
+}
+
+.link-active-profile {
+    border-right: 1px solid rgba(153, 153, 153, 0.423);
+    border-bottom: 3px solid rgba(171, 30, 171, 0.735);
+    background-color: rgba(171, 30, 171, 0.135);
+    color: #000;
+}
+
+.link-active-profile:first-child {
+    border-top-left-radius: 10px;
+}
+
+.link-active-profile:last-child {
+    border-top-right-radius: 10px;
+    border-right: none;
+}
+
+.link-profile:last-child {
+    border-right: none;
+}

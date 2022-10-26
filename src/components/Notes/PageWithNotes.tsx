@@ -15,10 +15,9 @@ import NoteBlocksPublic from './NoteBlocksPublic/NoteBlocksPublic';
 
 interface PageWithNotesProps {
   changeQuantityNotes?: (newNumber: number) => void;
-  isYourAccount: boolean;
 }
 
-const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes, isYourAccount }) => {
+const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes }) => {
   const params = useParams();
   const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/note/getAllNotes/${params.profileId!}`);
   const [notes, setNotes] = useState<NoteInterface[]>();
@@ -76,13 +75,14 @@ const PageWithNotes: React.FC<PageWithNotesProps> = ({ changeQuantityNotes, isYo
   const { user } = useContext(userContext);
 
   const handlerAddLike = async (idNote: string, isLiked: boolean): Promise<void> => {
-    console.log(idNote, isLiked, user);
     await AddLike(user!, idNote, isLiked, notes!, setNotes);
   };
 
   useEffect(() => {
     setNotes(data);
   }, [data, loading]);
+
+  const isYourAccount = user?._id === params.profileId;
 
   if (loading) return <CircularProgress />;
 

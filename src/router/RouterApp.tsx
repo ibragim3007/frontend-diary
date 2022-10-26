@@ -7,7 +7,10 @@ import LoaderCheckAuth from '../auth/LoadingAuth';
 import LoginPage from '../auth/LoginPage';
 import RegisterPage from '../auth/RegisterPage';
 import Header from '../components/Header/Header';
+import PageWithNotes from '../components/Notes/PageWithNotes';
 import PageWithPublicNotes from '../components/Notes/PageWithPublicNotes';
+import FollowersPage from '../components/ProfilePage/ProfileInnerPages/FollowersPage';
+import LikedPage from '../components/ProfilePage/ProfileInnerPages/LikedPage';
 import ProfilePage from '../components/ProfilePage/ProfilePage';
 import { API_LOCAL } from '../config';
 import { ColorModeContext } from '../context/themeContext';
@@ -69,11 +72,21 @@ const RouterApp: React.FC = () => {
                 <Route path="*" element={<Navigate to={links.login} />} />
               </Routes>
             ) : (
-              <div style={{ backgroundColor: mode === 'light' ? COLORS.backgroundColor : COLORS.backgroundColorDark }}>
+              <div
+                style={{
+                  backgroundColor: mode === 'light' ? COLORS.backgroundColor : COLORS.backgroundColorDark,
+                  minHeight: '100vh',
+                }}
+              >
                 <Header />
                 <Routes>
                   <Route path={links.notes} element={<PageWithPublicNotes />} />
-                  <Route path={`${links.profile}/:profileId`} element={<ProfilePage />} />
+                  <Route path={`${links.profile}/:profileId/`} element={<ProfilePage />}>
+                    <Route index element={<PageWithNotes />} />
+                    <Route path={`${links.profileLinks.liked}`} element={<LikedPage />} />
+                    <Route path={`${links.profileLinks.followers}`} element={<FollowersPage />} />
+                    <Route path={`${links.profileLinks.subscribers}`} element={<h1>Later...</h1>} />
+                  </Route>
                   <Route path={'*'} element={<Navigate to={links.notes} />} />
                 </Routes>
               </div>

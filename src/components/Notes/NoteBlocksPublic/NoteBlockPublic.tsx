@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import { userContext } from '../../../context/userContext';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { NoteInterface } from '../../../interfaces';
-import { COLORS } from '../../../UI/colors';
 import { getFullTime } from '../../helper/convertTime';
 import LikesButton from '../../helper/LikesButton';
 
@@ -37,10 +36,7 @@ const NoteBlockPublic: React.FC<NoteBlockPublicProps> = ({ note, handlerAddLike 
                 {note.user?.firstname} {note.user?.lastname}
               </NavLink>
             </Typography>
-            <Typography
-              variant="subtitle1"
-              style={{ color: isLiked ? COLORS.secondary : '#888', fontSize: 12, fontStyle: 'italic' }}
-            >
+            <Typography variant="subtitle1" style={{ color: '#888', fontSize: 12, fontStyle: 'italic' }}>
               {getFullTime(note.timestamps.createdAt)}
             </Typography>
           </Grid>

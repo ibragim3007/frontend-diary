@@ -1,9 +1,9 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { Grid, IconButton, Paper, Popover, Typography, useTheme } from '@mui/material';
+import { Button, ButtonGroup, Grid, IconButton, Paper, Popover, Typography, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
 import LoaderCheckAuth from '../../auth/LoadingAuth';
 import { API_LOCAL } from '../../config';
 import { ColorModeContext } from '../../context/themeContext';
@@ -11,9 +11,10 @@ import { userContext } from '../../context/userContext';
 import { useHttp } from '../../hooks/http.auth.hook';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UserInterface } from '../../interfaces';
+import { links } from '../../router/routerConfig';
 import { getTime } from '../helper/convertTime';
 import CustomSnackBar from '../helper/CustomSnack';
-import PageWithNotes from '../Notes/PageWithNotes';
+import './ButtonsProfileStyle.css';
 import InfoItemProfile from './InfoItemProfile';
 
 const ProfilePage: React.FC = () => {
@@ -21,9 +22,11 @@ const ProfilePage: React.FC = () => {
   const params = useParams();
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
-  const [quantityNotes, setQuantityNotes] = useState<number>(0);
-  const changeQuantityNotes = (newNumber: number): void => setQuantityNotes(newNumber);
+
   const { user } = useContext(userContext);
+  const isYourProfile = params.profileId === user?._id ? true : false;
+
+  const localTheme = localStorage.getItem('theme');
 
   const [openSnack, setOpenSnack] = React.useState(false);
   const handleCloseSnack = (event: React.SyntheticEvent | Event, reason?: string): void => {
@@ -35,8 +38,6 @@ const ProfilePage: React.FC = () => {
   const { data, loading } = useHttp<UserInterface>(
     `${API_LOCAL}/api/auth/user/${params.profileId ? params.profileId : ''}`,
   );
-
-  const isYourAccount = user?._id === params.profileId;
 
   useEffect(() => {
     if (data && !loading) {
@@ -61,6 +62,21 @@ const ProfilePage: React.FC = () => {
   };
 
   const open = Boolean(anchorEl);
+
+  const buttonsMenuProfile = [
+    {
+      to: links.profileLinks.liked,
+      text: 'Liked',
+    },
+    {
+      to: links.profileLinks.subscribers,
+      text: 'Subscriptions',
+    },
+    {
+      to: links.profileLinks.followers,
+      text: 'Followers',
+    },
+  ];
 
   if (loading) return <LoaderCheckAuth />;
 
@@ -113,7 +129,7 @@ const ProfilePage: React.FC = () => {
               </Grid>
               <Grid>
                 <InfoItemProfile info="Date of create" data={getTime(currentUserPage?.createdAt)!} />
-                <InfoItemProfile info="Number of notes" data={quantityNotes} />
+                {/* <InfoItemProfile info="Number of notes" data={quantityNotes} /> */}
               </Grid>
             </Grid>
           </Grid>
@@ -125,9 +141,43 @@ const ProfilePage: React.FC = () => {
               </IconButton>
             </Grid>
           </Grid>
+          {isYourProfile ? (
+            <Grid justifyContent="center" container>
+              <Grid
+                item
+                style={{
+                  background: '#8b8b8b21',
+                  display: 'inline-block',
+                  padding: '4px 0px',
+                  borderRadius: '10px 10px 0px 0px',
+                }}
+              >
+                {buttonsMenuProfile.map(button => {
+                  return (
+                    <NavLink
+                      key={button.to}
+                      to={button.to}
+                      style={{
+                        textDecoration: 'none',
+                        color: localTheme === 'dark' ? '#888' : '#000',
+                        padding: 6,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                      }}
+                      className={({ isActive }): string => {
+                        return isActive ? 'link-active-profile' : 'link-profile';
+                      }}
+                    >
+                      {button.text}
+                    </NavLink>
+                  );
+                })}
+              </Grid>
+            </Grid>
+          ) : null}
         </Grid>
       </Paper>
-      <PageWithNotes isYourAccount={isYourAccount} changeQuantityNotes={changeQuantityNotes} />
+      <Outlet />
     </Grid>
   );
 };

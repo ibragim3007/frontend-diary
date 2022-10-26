@@ -67,8 +67,8 @@ const AddNewNote: React.FC<AddNewNoteProps> = ({ addNewNotes }) => {
   };
 
   return (
-    <Paper>
-      <Grid style={{ padding: 20, margin: 'auto', borderRadius: 10, maxWidth: 1920 }}>
+    <Paper style={{ margin: 'auto', maxWidth: 1230 }}>
+      <Grid style={{ padding: 30 }}>
         <Grid wrap="wrap" spacing={3} container>
           <Grid lg={4} md={5} xs={12} item>
             <MainText>Title of the day</MainText>

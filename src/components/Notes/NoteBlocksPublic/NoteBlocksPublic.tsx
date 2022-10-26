@@ -15,7 +15,7 @@ const NoteBlocksPublic: React.FC<NoteBlocksPublicProps> = ({ notes, handlerAddLi
       style={{
         maxWidth: 1600,
         margin: 'auto',
-        padding: 20,
+        padding: 5,
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 400px))',
         gridGap: 15,

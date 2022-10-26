@@ -4,6 +4,7 @@
     background-color: rgba(171, 0, 171, 0.095);
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+    transition: 0.2s ease;
 }
 
 .link-active-mobile {
@@ -11,4 +12,5 @@
     padding: 3px 3px 6px 3px;
     background-color: rgba(189, 53, 235, 0.1);
     border-radius: 10px;
+    transition: 0.2s ease;
 }

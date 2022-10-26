@@ -16,8 +16,8 @@ const NoteBlocks: React.FC<NoteBlocksProps> = ({ notes, deleteNote, updateNote, 
     <Grid
       style={{
         maxWidth: 1600,
-        margin: 'auto',
-        padding: 20,
+        margin: '5px auto',
+        padding: 10,
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 400px))',
         gridGap: 15,

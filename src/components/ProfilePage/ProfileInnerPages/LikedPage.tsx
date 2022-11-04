@@ -16,13 +16,18 @@ const LikedPage: React.FC = () => {
     setOpenSnack(false);
   };
 
-  const { data, loading } = useHttp<NoteInterface[]>(`${API_LOCAL}/api/auth/allLikedNotes`);
+  const { data, loading } = useHttp<{ noteLiked: NoteInterface; date: Date }[]>(`${API_LOCAL}/api/auth/allLikedNotes`);
 
   const [likedNotes, setLikedNotes] = useState<NoteInterface[]>();
 
   useEffect(() => {
-    if (data && !loading) {
-      setLikedNotes(data.reverse());
+    const sortArray = data?.sort((objA, objB) => Number(objB.date) - Number(objA.date));
+
+    const sortedNotesArray = data?.map(item => {
+      return item.noteLiked;
+    });
+    if (data && !loading && sortArray && sortedNotesArray) {
+      setLikedNotes(sortedNotesArray.reverse());
     }
   }, [data, loading]);
 

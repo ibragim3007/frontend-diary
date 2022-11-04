@@ -20,7 +20,6 @@ export interface UserInterface {
   password: string;
   dateOfBirhDate?: Date;
   readonly createdAt: Date;
-  notesLiked?: string[];
 }
 
 export interface TokenUserInfo {
